@@ -1,0 +1,119 @@
+﻿@model IEnumerable<jalaproj.Models.Employee>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LastName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Mobile)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Gender)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Address)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.OtherCity)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Aws)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DevOps)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FullstackDevelopment)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.QaAutomation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MiddleWare)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.WebServices)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.City)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Country)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.FirstName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LastName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Mobile)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Gender)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Address)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OtherCity)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Aws)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DevOps)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FullstackDevelopment)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.QaAutomation)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MiddleWare)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.WebServices)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.City.CityName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Country.CountryName)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.EmployeeId">Edit</a> |
+               
+                <a asp-action="Delete" asp-route-id="@item.EmployeeId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

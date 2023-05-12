@@ -1,0 +1,175 @@
+﻿@model jalaproj.Models.Employee
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Employee</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="EmployeeId" />
+            <div class="form-group">
+                <label asp-for="FirstName" class="control-label"></label>
+                <input asp-for="FirstName" class="form-control" />
+                <span asp-validation-for="FirstName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LastName" class="control-label"></label>
+                <input asp-for="LastName" class="form-control" />
+                <span asp-validation-for="LastName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Email" class="control-label"></label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Mobile" class="control-label"></label>
+                <input asp-for="Mobile" class="form-control" />
+                <span asp-validation-for="Mobile" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Gender:</label>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" asp-for="Gender" value="Male" id="maleRadio">
+                    <label class="form-check-label" for="maleRadio">
+                        Male
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" asp-for="Gender" value="Female" id="femaleRadio">
+                    <label class="form-check-label" for="femaleRadio">
+                        Female
+                    </label>
+                </div>
+                <span asp-validation-for="Gender" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Address" class="control-label"></label>
+                <input asp-for="Address" class="form-control" />
+                <span asp-validation-for="Address" class="text-danger"></span>
+            </div>
+
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.CountryId, "Country", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownListFor(model => model.CountryId, new SelectList(ViewBag.Countries, "CountryId", "CountryName"), "Select Country", new { @class = "form-control",id="lstCountry" })
+                    @Html.ValidationMessageFor(model => model.CountryId, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.CityId, "City", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownListFor(model => model.CityId, new SelectList(ViewBag.Cities, "CityId", "CityName"), "Select City", new { @class = "form-control lstCity" })
+                    @Html.ValidationMessageFor(model => model.CityId, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="otherCityCheckbox" name="otherCityCheckbox" value="true">
+                    <label class="form-check-label" for="otherCityCheckbox">
+                        Other City
+                    </label>
+                </div>
+                <div id="otherCityTextbox" style="display:none">
+                    <label asp-for="OtherCity" class="control-label"></label>
+                    <input asp-for="OtherCity" class="form-control" />
+                    <span asp-validation-for="OtherCity" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Aws" /> @Html.DisplayNameFor(model => model.Aws)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="DevOps" /> @Html.DisplayNameFor(model => model.DevOps)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="FullstackDevelopment" /> @Html.DisplayNameFor(model => model.FullstackDevelopment)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="QaAutomation" /> @Html.DisplayNameFor(model => model.QaAutomation)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="MiddleWare" /> @Html.DisplayNameFor(model => model.MiddleWare)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="WebServices" /> @Html.DisplayNameFor(model => model.WebServices)
+                </label>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#lstCountry').change(function () {
+                var selectedCountry = $('#lstCountry').val();
+
+                var CitySelect = $('.lstCity');
+                CitySelect.empty();
+
+                if (selectedCountry != null && selectedCountry != '') {
+                    $.getJSON('@Url.Action("GetCities")', { CountryId: selectedCountry }, function (Cities) {
+                        CitySelect.append($('<option/>', {
+                            value: null,
+                            text: "select City"
+                        }));
+                        $.each(Cities, function (index, City) {
+                            CitySelect.append($('<option/>', {
+                                value: City.value,
+                                text: City.text
+                            }));
+                        });
+                    });
+                }
+
+            });
+        });
+
+
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            $("#otherCityCheckbox").click(function () {
+                if ($(this).prop("checked")) {
+                    $("#otherCityTextbox").show();
+                } else {
+                    $("#otherCityTextbox").hide();
+                }
+            });
+        });
+    </script>
+}
+}
